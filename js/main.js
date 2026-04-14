@@ -5,9 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.renderizarPensamentos()
 
     const formularioPensamento = document.getElementById('pensamento-form')
-    const botaoCancelar = document.getElementById("botao-cancelar")
+    const botaoCancelar = document.getElementById('botao-cancelar')
+    const inputBusca = document.getElementById('campo-busca')
+
     formularioPensamento.addEventListener('submit', manipularSubmissaoFormulario)
-    botaoCancelar.addEventListener("click", manipularCancelamento)
+    botaoCancelar.addEventListener('click', manipularCancelamento)
+    inputBusca.addEventListener('input', manipularBusca)
 })
 
 async function manipularSubmissaoFormulario(event) {
@@ -24,11 +27,24 @@ async function manipularSubmissaoFormulario(event) {
         }
         ui.renderizarPensamentos()
     }
-    catch{
+    catch (error) {
         alert('Erro ao salvar pensamento')
+        throw error
     }
 }
 
 function manipularCancelamento() {
     ui.limparFormulario();
+}
+
+async function manipularBusca() {
+    const termoBusca = document.getElementById('campo-busca').value
+    try {
+        const pensamentosFiltrados = await api.buscarPensamentoPorTermo(termoBusca)
+        ui.renderizarPensamentos(pensamentosFiltrados)
+    } 
+    catch (error) {
+        alert('Erro ao realizar busca')
+        throw error
+    }
 }

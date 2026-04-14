@@ -23,7 +23,12 @@
     {
       "id": "9f3c",
       "conteudo": "Você não é todo mundo!",
-      "autoria": "Mãe"
+      "autoria": "Meu amor"
+    },
+    {
+      "id": "1zQu79BN0iY",
+      "conteudo": "Santos Futebol Clube",
+      "autoria": "eu"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

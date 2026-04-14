@@ -9,13 +9,26 @@ const ui = {
         document.getElementById('pensamento-autoria').value = pensamento.autoria
     },
 
-    async renderizarPensamentos() {
+    async renderizarPensamentos(pensamentosFiltrados = null) {
         const listaPensamentos = document.getElementById('lista-pensamentos')
+        const mensagemVazia = document.getElementById('mensagem-vazia')
         listaPensamentos.innerHTML = ''
 
         try {
-            const pensamentos = await api.buscarPensamentos()
-            pensamentos.forEach(ui.adicionarPensamentoNaLista);
+            let pensamentosParaRenderizar
+
+            if (pensamentosFiltrados) {
+                pensamentosParaRenderizar = pensamentosFiltrados
+            } else {
+                pensamentosParaRenderizar = await api.buscarPensamentos()
+            }
+
+            if (pensamentosParaRenderizar.lenght === 0) {
+                mensagemVazia.style.display = 'block'
+            } else {
+                mensagemVazia.style.display = 'none'
+                pensamentosParaRenderizar.forEach(ui.adicionarPensamentoNaLista)
+            }
         }
         catch {
             alert('Erro ao renderizar pensamentos')
