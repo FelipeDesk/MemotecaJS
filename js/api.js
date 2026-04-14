@@ -84,6 +84,23 @@ const api = {
             alert('Erro ao filtrar pensamentos')
             throw error
         }
+    },
+
+    async atualizarFavorito(id, favorito) {
+        try {
+            const response = await fetch(`${URL_BASE}/pensamentos/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({favorito})
+            })
+            return await response.json()
+        } 
+        catch (error) {
+            alert('Erro ao atualizar favorito')
+            throw error
+        }
     }
 }
 
