@@ -35,11 +35,10 @@
       "data": "2024-05-09T00:00:00.000Z"
     },
     {
-      "id": "1zQu79BN0iY",
-      "favorito": false,
-      "conteudo": "Santos Futebol Clube",
-      "autoria": "eu",
-      "data": "2025-10-10T00:00:00.000Z"
+      "conteudo": "exemplo",
+      "autoria": "teste",
+      "data": "2026-04-15T00:00:00.000Z",
+      "id": "rmX9-R-3OiU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
