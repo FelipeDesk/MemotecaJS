@@ -1,10 +1,22 @@
 const URL_BASE = 'http://localhost:3000'
 
+const converterStringParaData = (dataString) => {
+    const [ano, mes, dia] = dataString.split('-')
+    return new Date(Date.UTC(ano, mes-1, dia))
+}
+
 const api = {
     async buscarPensamentos() {
         try {
             const response = await fetch(`${URL_BASE}/pensamentos`)
-            return await response.json()
+            const pensamentos =  await response.json()
+
+            return pensamentos.map(pensamento => {
+                return {
+                    ...pensamento,
+                    data: new Date(pensamento.data)
+                }
+            })
         }
         catch (error) {
             alert('Erro ao buscar pensamentos')
@@ -14,12 +26,16 @@ const api = {
 
     async salvarPensamento(pensamento) {
         try {
+            const data = converterStringParaData(pensamento.data)
             const response = await fetch(`${URL_BASE}/pensamentos`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(pensamento)
+                body: JSON.stringify({
+                    ...pensamento,
+                    data: data.toISOString()
+                })
             })
             return await response.json()
         }
@@ -32,7 +48,12 @@ const api = {
     async buscarPensamentoPorId(id) {
         try {
             const response = await fetch(`${URL_BASE}/pensamentos/${id}`)
-            return await response.json()
+            const pensamento = await response.json()
+
+            return {
+                ...pensamento,
+                data: new Date(pensamento.data)
+            }
         }
         catch (error) {
             alert('Erro ao buscar pensamento')
